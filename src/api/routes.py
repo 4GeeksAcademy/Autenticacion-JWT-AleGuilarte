@@ -20,3 +20,18 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+
+@api.route("/registro", methods=['POST'])
+def user_registro():
+    body = request.get_json()
+    new_user = User()
+    new_user.username = body("username")
+    new_user.email = body("email")
+    new_user.password = body("password")
+    new_user.is_active = True
+
+    db.session.add(new_user)
+    db.session.commit()
+ 
+    return jsonify({"msg" : "Usuario creado correctamente"}), 200
